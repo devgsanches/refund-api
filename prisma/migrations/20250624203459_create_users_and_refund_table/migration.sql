@@ -1,9 +1,18 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('employee', 'manager');
+
+-- CreateEnum
+CREATE TYPE "Category" AS ENUM ('food', 'others', 'services', 'transport', 'accommodation');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT 'employee',
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -11,10 +20,13 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "refunds" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "category" "Category" NOT NULL,
+    "filepath" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "categoria" TEXT NOT NULL,
-    "valor" TEXT NOT NULL,
-    "comprovante_url" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "refunds_pkey" PRIMARY KEY ("id")
 );
