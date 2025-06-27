@@ -6,7 +6,32 @@ import { AppError } from '@/utils/AppError'
 
 export class RefundsController {
   async index(req: Request, res: Response) {
+    const schemaQuery = z.object({
+      name: z
+        .string({
+          message: 'Query params must be text.',
+        })
+        .optional()
+        .default(''),
+      page: z.coerce.number().optional().default(1),
+      perPage: z.coerce.number().optional().default(10),
+    })
+
+    const { name, page, perPage } = schemaQuery.parse(req.query)
+
+    // skip calculation (paginação baseada no resultado do filtro)
+    const skip = (page - 1) * perPage
+
     const refunds = await prisma.refund.findMany({
+      skip,
+      take: perPage,
+      where: {
+        user: {
+          name: {
+            contains: name.trim().charAt(0).toUpperCase(),
+          },
+        },
+      },
       include: {
         user: {
           select: {
@@ -14,9 +39,33 @@ export class RefundsController {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
-    res.json(refunds)
+    const totalRecords = await prisma.refund.count({
+      where: {
+        user: {
+          name: {
+            contains: name.trim().charAt(0).toUpperCase(),
+          },
+        },
+      },
+    })
+
+    // uso do math.ceil() para formular mais uma página caso dê número quebrado, e exibo nela, os registros restantes.
+    const totalPages = Math.ceil(totalRecords / perPage)
+
+    res.json({
+      refunds,
+      pagination: {
+        page,
+        perPage,
+        totalRecords,
+        totalPages: totalPages > 0 ? totalPages : 1,
+      },
+    })
   }
 
   async store(req: Request, res: Response) {
