@@ -2,7 +2,6 @@ import multer from 'multer'
 import path from 'node:path'
 import crypto from 'node:crypto'
 
-// uppercase |> variáveis de configuração
 const TMP_FOLDER = path.resolve(__dirname, '..', '..', 'tmp')
 const UPLOADS_FOLDER = path.relative(TMP_FOLDER, 'uploads')
 
