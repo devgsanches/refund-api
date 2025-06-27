@@ -3,10 +3,37 @@ import { z } from 'zod'
 import { Category } from '../../generated/prisma'
 import { prisma } from '@/database/prisma'
 import { AppError } from '@/utils/AppError'
+import { includes } from 'zod/v4'
 
 export class RefundsController {
   async index(req: Request, res: Response) {
+    const schemaQuery = z.object({
+      name: z.string().trim().optional(),
+      page: z.coerce.number().optional().default(1),
+      perPage: z.coerce.number().optional(),
+    })
+
+    const { name, page, perPage } = schemaQuery.parse(req.query)
+
+    const take = perPage ? perPage : 6
+
+    const skip = (page - 1) * take
+
+    if (!req.user) {
+      throw new AppError('Unauthorized.', 401)
+    }
+
     const refunds = await prisma.refund.findMany({
+      skip,
+      take,
+      where: {
+        user: {
+          name: {
+            contains: name,
+            mode: 'insensitive',
+          },
+        },
+      },
       include: {
         user: {
           select: {
@@ -16,7 +43,48 @@ export class RefundsController {
       },
     })
 
-    res.json(refunds)
+    const refundsTotal = await prisma.refund.findMany({
+      where: {
+        user: {
+          name: {
+            contains: name,
+            mode: 'insensitive',
+          },
+        },
+      },
+    })
+
+    const pageCount = Math.ceil(refundsTotal.length / take)
+
+    res.json({
+      refunds,
+      pagination: {
+        page,
+        perPage: take,
+        recordsTotal: refundsTotal.length,
+        pageTotal: pageCount,
+      },
+    })
+  }
+
+  async show(req: Request, res: Response) {
+    const schemaParams = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = schemaParams.parse(req.params)
+
+    const refund = await prisma.refund.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!refund) {
+      throw new AppError('Refund not found.')
+    }
+
+    res.json(refund)
   }
 
   async store(req: Request, res: Response) {

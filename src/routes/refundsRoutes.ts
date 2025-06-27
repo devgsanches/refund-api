@@ -11,4 +11,4 @@ refundsRoutes.get(
   refundsController.index
 )
 refundsRoutes.post('/', refundsController.store)
-refundsRoutes.delete('/:id', refundsController.delete)
+refundsRoutes.delete('/:id', verifyUserAuthorization(['manager']), refundsController.delete)
