@@ -8,29 +8,28 @@ import { includes } from 'zod/v4'
 export class RefundsController {
   async index(req: Request, res: Response) {
     const schemaQuery = z.object({
-      name: z.string().trim().optional(),
+      name: z
+        .string({
+          message: 'Query params must be text.',
+        })
+        .optional()
+        .default(''),
       page: z.coerce.number().optional().default(1),
-      perPage: z.coerce.number().optional(),
+      perPage: z.coerce.number().optional().default(10),
     })
 
     const { name, page, perPage } = schemaQuery.parse(req.query)
 
-    const take = perPage ? perPage : 6
-
-    const skip = (page - 1) * take
-
-    if (!req.user) {
-      throw new AppError('Unauthorized.', 401)
-    }
+    // skip calculation (paginação baseada no resultado do filtro)
+    const skip = (page - 1) * perPage
 
     const refunds = await prisma.refund.findMany({
       skip,
-      take,
+      take: perPage,
       where: {
         user: {
           name: {
-            contains: name,
-            mode: 'insensitive',
+            contains: name.trim().charAt(0).toUpperCase(),
           },
         },
       },
@@ -41,50 +40,33 @@ export class RefundsController {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
-    const refundsTotal = await prisma.refund.findMany({
+    const totalRecords = await prisma.refund.count({
       where: {
         user: {
           name: {
-            contains: name,
-            mode: 'insensitive',
+            contains: name.trim().charAt(0).toUpperCase(),
           },
         },
       },
     })
 
-    const pageCount = Math.ceil(refundsTotal.length / take)
+    // uso do math.ceil() para formular mais uma página caso dê número quebrado, e exibo nela, os registros restantes.
+    const totalPages = Math.ceil(totalRecords / perPage)
 
     res.json({
       refunds,
       pagination: {
         page,
-        perPage: take,
-        recordsTotal: refundsTotal.length,
-        pageTotal: pageCount,
+        perPage,
+        totalRecords,
+        totalPages: totalPages > 0 ? totalPages : 1,
       },
     })
-  }
-
-  async show(req: Request, res: Response) {
-    const schemaParams = z.object({
-      id: z.string().uuid(),
-    })
-
-    const { id } = schemaParams.parse(req.params)
-
-    const refund = await prisma.refund.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    if (!refund) {
-      throw new AppError('Refund not found.')
-    }
-
-    res.json(refund)
   }
 
   async store(req: Request, res: Response) {
