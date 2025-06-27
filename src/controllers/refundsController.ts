@@ -48,7 +48,7 @@ export class RefundsController {
       where: {
         user: {
           name: {
-            contains: name.trim().charAt(0).toUpperCase(),
+            contains: name.trim().charAt(0).toUpperCase() + name.slice(1),
           },
         },
       },
