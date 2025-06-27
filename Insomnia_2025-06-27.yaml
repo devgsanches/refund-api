@@ -1,0 +1,337 @@
+type: collection.insomnia.rest/5.0
+name: Refund
+meta:
+  id: wrk_4d51fb34b4da4989a6e512347feeb921
+  created: 1750739933153
+  modified: 1750740227900
+  description: ""
+collection:
+  - name: Users
+    meta:
+      id: fld_af209d138f9d46f285676f98358709e3
+      created: 1750740277006
+      modified: 1750740331286
+      sortKey: -1750740277006
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_b88f69d3e67546b29c355f29bef47018
+          created: 1750739933273
+          modified: 1750801058123
+          isPrivate: false
+          description: ""
+          sortKey: -1750740280081
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_e83b361064634e0d8adba814712fad1d
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Store
+        meta:
+          id: req_ec70e412118b4fbc8345612efd418cb2
+          created: 1750740597077
+          modified: 1750859612205
+          isPrivate: false
+          description: ""
+          sortKey: -1750740597077
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Manager",
+            	"email": "manager@flapper.aero",
+            	"password": "1q2w3e4r"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/421bedf9-9360-4ba8-95dc-737d629e35dd"
+        name: Delete
+        meta:
+          id: req_09acde44bebd4080b6ad79d73b1d92c9
+          created: 1750799878760
+          modified: 1750801153218
+          isPrivate: false
+          description: ""
+          sortKey: -1750799878760
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_78a288ee961c422c829a80e8a84a515b
+          - id: pair_3c85bc0d3644452ebeaebc41accfeda1
+            name: Authorization
+            value: Bearer {% response 'body', 'req_5935a6cdc9fd48bbbf447f3902da61cc',
+              'b64::JC50b2tlbg==::46b', 'never', 60 %}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: users
+  - name: Sessions
+    meta:
+      id: fld_fcc8310feeb742d49d991c5654e2ce97
+      created: 1750740285793
+      modified: 1750740313333
+      sortKey: -1750740285793
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Store
+        meta:
+          id: req_5935a6cdc9fd48bbbf447f3902da61cc
+          created: 1750740287718
+          modified: 1751031825503
+          isPrivate: false
+          description: ""
+          sortKey: -1750740287718
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "giovanna.sanches@flapper.aero",
+            	"password": "1q2w3e4r"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: sessions
+  - name: Refunds
+    meta:
+      id: fld_e91d6c416c3f4f7e9538ca91d7da4809
+      created: 1750740673437
+      modified: 1750740853577
+      sortKey: -1750740673437
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_3fcaee18c56f4e258b97226f64ae1593
+          created: 1750740838160
+          modified: 1750869779737
+          isPrivate: false
+          description: ""
+          sortKey: -1750740838160
+        method: GET
+        parameters:
+          - id: pair_3f9c5eaa5ca64b459ad9c129cb850f12
+            name: name
+            value: guilherme
+            description: ""
+            disabled: false
+            type: text
+            multiline: false
+          - id: pair_6a74eaecfc7749e5a1d23c36679ffee7
+            name: perPage
+            value: "2"
+            description: ""
+            disabled: true
+          - id: pair_8b2308e9c571406ca31ebb321c281f51
+            name: page
+            value: "2"
+            description: ""
+            disabled: true
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_c6057373682047dc9c51708d32beb986
+          - id: pair_6229e46a266442b6843d9b9e4a63bb12
+            name: Authorization
+            value: Bearer {% response 'body', 'req_5935a6cdc9fd48bbbf447f3902da61cc',
+              'b64::JC50b2tlbg==::46b', 'never', 60 %}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Store
+        meta:
+          id: req_1a3508a2aa90489c9b27795d72ef911e
+          created: 1750740862008
+          modified: 1751029831070
+          isPrivate: false
+          description: ""
+          sortKey: -1750740862008
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Locomoção - evento",
+            	"amount": 89.90,
+            	"category": "food",
+            	"filepath": "https://www.yumpu.com/en/image/facebook/24823037.jpg"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+            id: pair_ed237238de97495ca3af4b20d384251e
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_c6a927bf00194c348388d0f08f972b64
+          - id: pair_ffc045407dfa4450b8a18e32d8e2cb6b
+            name: Authorization
+            value: Bearer {% response 'body', 'req_5935a6cdc9fd48bbbf447f3902da61cc',
+              'b64::JC50b2tlbg==::46b', 'never', 60 %}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/4b760f54-4647-4fcb-8e32-8b7667ccb690"
+        name: Delete
+        meta:
+          id: req_4541a8f366f7484f9568608571f68b20
+          created: 1750855176542
+          modified: 1750855594468
+          isPrivate: false
+          description: ""
+          sortKey: -1750855176542
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_b44dab9645e44b40a6dd34b629acf697
+          - id: pair_39195a5f4b514103a099833e920b05c8
+            name: Authorization
+            value: Bearer {% response 'body', 'req_5935a6cdc9fd48bbbf447f3902da61cc',
+              'b64::JC50b2tlbg==::46b', 'always', 60 %}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: refunds
+  - name: Uploads
+    meta:
+      id: fld_7e7f173a0909427595ac55c27c76c701
+      created: 1751031479051
+      modified: 1751031931833
+      sortKey: -1751031479051
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Store
+        meta:
+          id: req_587cac60a36347f7ab4fdab94d6e1ea7
+          created: 1751031481813
+          modified: 1751033295848
+          isPrivate: false
+          description: ""
+          sortKey: -1751031481813
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_a7e287c5968f41bc84a889cd2a682efe
+              name: file
+              value: https://www.yumpu.com/en/image/facebook/24823037.jpg
+              description: ""
+              disabled: false
+              type: file
+              fileName: C:\Users\guilh\Downloads\comprovante.jpg
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.2.0
+            id: pair_4efda32513f54a0cbd3fdebb2417feec
+          - id: pair_2c29471c719340ba8a1c1c458c692421
+            name: Authorization
+            value: Bearer {% response 'body', 'req_5935a6cdc9fd48bbbf447f3902da61cc',
+              'b64::JC50b2tlbg==::46b', 'always', 60 %}
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: uploads
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_5cbefb1b828a479c811ecb23f22ab196f6d04985
+    created: 1750739933161
+    modified: 1750739933161
+environments:
+  name: Base Environment
+  meta:
+    id: env_5cbefb1b828a479c811ecb23f22ab196f6d04985
+    created: 1750739933157
+    modified: 1750739933157
+    isPrivate: false
+  subEnvironments:
+    - name: Dev
+      meta:
+        id: env_5a7872935de74a4d95bff6d227bf26c8
+        created: 1750740237687
+        modified: 1750740262572
+        isPrivate: false
+        sortKey: 1750740237687
+      data:
+        BASE_URL: http://localhost:3333
+      color: "#f91a1a"
