@@ -407,8 +407,7 @@ O projeto inclui um arquivo `Insomnia_2025-06-27.yaml` com todas as rotas docume
 
 **Guilherme Sanches**
 
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/guilhermesanches-dev)
+- LinkedIn: [Guilherme Sanches](https://linkedin.com/in/guilhermesanches-dev)
 
 ---
 
