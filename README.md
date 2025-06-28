@@ -412,5 +412,5 @@ O projeto inclui um arquivo `Insomnia_2025-06-27.yaml` com todas as rotas docume
 ---
 
 <div align="center">
-  <strong>Desenvolvido com ❤️ por Guilherme Sanches</strong>
+  <strong>Desenvolvido com ❤️ por devgsanches</strong>
 </div>
