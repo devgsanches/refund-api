@@ -13,4 +13,8 @@ routes.use('/sessions', sessionsRoutes)
 
 routes.use(authenticate)
 routes.use('/refunds', refundsRoutes)
-routes.use('/uploads', verifyUserAuthorization(['employee']), uploadsRoutes)
+routes.use(
+  '/uploads',
+  verifyUserAuthorization(['employee', 'manager']),
+  uploadsRoutes
+)
