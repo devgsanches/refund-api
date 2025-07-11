@@ -11,10 +11,5 @@ export const routes = Router()
 routes.use('/users', usersRoutes)
 routes.use('/sessions', sessionsRoutes)
 
-routes.use(authenticate)
-routes.use('/refunds', refundsRoutes)
-routes.use(
-  '/uploads',
-  verifyUserAuthorization(['employee', 'manager']),
-  uploadsRoutes
-)
+routes.use('/uploads', uploadsRoutes)
+routes.use('/refunds', authenticate, refundsRoutes)
