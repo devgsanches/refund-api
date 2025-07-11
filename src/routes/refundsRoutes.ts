@@ -10,5 +10,6 @@ refundsRoutes.get(
   verifyUserAuthorization(['manager']),
   refundsController.index
 )
+refundsRoutes.get('/:id', verifyUserAuthorization(['manager']), refundsController.show)
 refundsRoutes.post('/', refundsController.store)
 refundsRoutes.delete('/:id', verifyUserAuthorization(['manager']), refundsController.delete)

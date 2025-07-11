@@ -68,6 +68,33 @@ export class RefundsController {
     })
   }
 
+  async show(req: Request, res: Response) {
+    const schemaParams = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = schemaParams.parse(req.params)
+
+    const refund = await prisma.refund.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
+
+    if (!refund) {
+      throw new AppError('Refund not found.', 404)
+    }
+
+    res.json(refund)
+  }
+
   async store(req: Request, res: Response) {
     const schema = z.object({
       name: z.string().trim(),
